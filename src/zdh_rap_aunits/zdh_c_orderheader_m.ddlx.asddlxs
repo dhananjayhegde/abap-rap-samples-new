@@ -7,6 +7,9 @@
         value: 'Description'
     }
 }
+
+@Search.searchable: true
+
 annotate view ZDH_C_OrderHeader_M with
 {
 
@@ -27,11 +30,17 @@ annotate view ZDH_C_OrderHeader_M with
   @UI.identification: [
     { type: #FOR_ACTION, dataAction: 'Copy', isCopyAction: true, label: 'Copy', position: 10  }
   ]
+  @UI.selectionField: [{ position: 10 }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
   OrderId;
 
   @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 10, label: 'Description'   }]
   @UI.lineItem: [{ position: 10, label: 'Description'   }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
   Description;
+  
   @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 20, label: 'Order Total'    }]
   @UI.lineItem: [{ position: 20, label: 'Order Total'   }]
   TotalAmount;
@@ -42,6 +51,9 @@ annotate view ZDH_C_OrderHeader_M with
   
   @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 40, label: 'Status'   }]
   @UI.lineItem: [{ position: 40, label: 'Status'   }]
+  @UI.selectionField: [{ position: 10 }]  
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
   Status;
 
   @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
