@@ -3,4 +3,10 @@ Earlier repo with similar name was not compatible with abapGit - i.e. code was m
 
 So, I decided to create a new package and use that for all future `Sample` development.  Now, I use abapGit to push the code from my Trial account to this repo.  This will also help me in future when my own Trial account gets deleted and I have to create new one!
 
+# Packages
+
+| Package        | Usage                                                                                                                                                        |
+|----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ZDH_RAP_AUNITS | As the name would suggest, started as a project to demonstrate ABAP Units for RAP Business Objects.  But, later becamse `RAP Managed BO with Late Numbering` |
+|                |                                                                                                                                                              |
 
