@@ -28,6 +28,15 @@ define view entity ZDH_I_OrderItem_M
       NetPrice,
       Currency,
       Status,
+      
+      @Semantics.largeObject:{
+        mimeType: 'MimeType',
+        fileName: 'FileName',
+        contentDispositionPreference: #ATTACHMENT
+      }
+      Attachment,
+      MimeType,
+      FileName,
 
       //Admin fields
       @Semantics.user.createdBy: true

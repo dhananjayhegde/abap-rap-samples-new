@@ -5,7 +5,8 @@
     },
     description: {
         value: 'Description'
-    }
+    },
+    imageUrl: 'Attachment'
 }
 annotate view ZDH_C_OrderItem_M with
 {
@@ -52,6 +53,9 @@ annotate view ZDH_C_OrderItem_M with
   @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 70, label: 'Status'   }]
   @UI.lineItem: [{ position: 70,  label: 'Status'  }]
   Status;
+  
+  @UI.lineItem: [{ position: 5,  label: 'Image' }]
+  Attachment;
   
   @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
   LocalCreatedByUser;

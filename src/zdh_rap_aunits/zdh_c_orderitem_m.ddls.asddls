@@ -15,12 +15,19 @@ define view entity ZDH_C_OrderItem_M
       NetPrice,
       Currency,
       Status,
+
+
+      @Semantics.imageUrl: true
+      Attachment,
+      MimeType,
+      FileName,
+
       LocalCreatedByUser,
       LocalCreatedAt,
       LocalLastChangedByUser,
       LocalLastChangedAt,
       LastChangedAt,
-      
+
       /* Associations */
       _Order : redirected to parent ZDH_C_OrderHeader_M
 }
