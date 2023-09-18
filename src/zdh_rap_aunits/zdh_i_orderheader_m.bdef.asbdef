@@ -25,7 +25,7 @@ late numbering
   draft action Edit;
   draft action Discard;
   draft action Resume;
-  draft action Activate optimized with additional implementation;
+  draft action Activate optimized;
   draft determine action Prepare;
 
   factory action Copy [1];

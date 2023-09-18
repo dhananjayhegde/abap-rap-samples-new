@@ -17,8 +17,7 @@ CLASS lhc_Order DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys REQUEST requested_features FOR order RESULT result.
     METHODS copy FOR MODIFY
       IMPORTING keys FOR ACTION order~copy.
-    METHODS activate FOR MODIFY
-      IMPORTING keys FOR ACTION order~activate.
+
     METHODS collectlatenumberingkeys FOR DETERMINE ON SAVE
       IMPORTING keys FOR order~collectlatenumberingkeys.
 
@@ -181,16 +180,6 @@ CLASS lhc_Order IMPLEMENTATION.
       mapped-order[ 1 ]-%cid = keys[ 1 ]-%cid.
     ENDIF.
 
-  ENDMETHOD.
-
-  METHOD Activate.
-*
-*    " map ItemForEdit to ItemNo
-*    READ ENTITIES OF zdh_i_orderheader_m IN LOCAL MODE
-*        ENTITY Order
-*            BY \_OrderItem ALL FIELDS WITH CORRESPONDING #( keys ) RESULT DATA(order_items_active).
-*
-*    my_order_items_active = order_items_active.
   ENDMETHOD.
 
   METHOD CollectLateNumberingKeys.
