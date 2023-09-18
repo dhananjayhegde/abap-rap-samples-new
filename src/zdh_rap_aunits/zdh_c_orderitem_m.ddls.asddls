@@ -6,8 +6,8 @@ define view entity ZDH_C_OrderItem_M
 {
   key OrderId,
   key ItemNo,
-      ItemNoForEdit,
       ParentItemNo,
+      ItemNoForEdit,
       IsOutline,
       Description,
       Quantity,

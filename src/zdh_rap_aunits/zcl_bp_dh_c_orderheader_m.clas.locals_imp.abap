@@ -14,11 +14,6 @@ CLASS lhc_Order IMPLEMENTATION.
     DATA:
         order_item_cba TYPE TABLE FOR CREATE ZDH_I_OrderHeader_M\\Order\_OrderItem.
 
-*    " Get Order header for each item key
-*    READ ENTITIES OF zdh_i_orderheader_m
-*        ENTITY OrderItem
-*            BY \_Order ALL FIELDS WITH CORRESPONDING #( entities ) RESULT DATA(orders).
-
     " Get all existing items for each order
     READ ENTITIES OF zdh_i_orderheader_m
         ENTITY Order
@@ -27,7 +22,7 @@ CLASS lhc_Order IMPLEMENTATION.
     " Last item per order/order %PID
     SELECT
         FROM @order_items AS items
-        FIELDS %pidparent AS pidparent, OrderId, MAX( ItemNo ) AS LastItemNo
+        FIELDS %pidparent AS pidparent, OrderId, MAX( ItemNoForEdit ) AS LastItemNo
         GROUP BY ORderId, %pidparent
         INTO TABLE @DATA(orders_w_last_item).
 
@@ -45,14 +40,14 @@ CLASS lhc_Order IMPLEMENTATION.
 
         INSERT CORRESPONDING #( <item_cba_orig> EXCEPT %target ) INTO TABLE order_item_cba ASSIGNING FIELD-SYMBOL(<item_cba>).
 
-        LOOP AT <item_cba_orig>-%target ASSIGNING FIELD-SYMBOL(<item_target_orig>) WHERE ItemNo IS INITIAL.
+        LOOP AT <item_cba_orig>-%target ASSIGNING FIELD-SYMBOL(<item_target_orig>) WHERE ItemNoForEdit IS INITIAL.
 
           " Item no
           order_last_item_no   += 10.
 
           INSERT CORRESPONDING #( <item_target_orig> ) INTO TABLE <item_cba>-%target ASSIGNING FIELD-SYMBOL(<item_create>).
-          <item_create>-ItemNo            = order_last_item_no.
-          <item_create>-%control-ItemNo   = if_abap_behv=>mk-on.
+          <item_create>-ItemNoForEdit           = order_last_item_no.
+          <item_create>-%control-ItemNoForEdit  = if_abap_behv=>mk-on.
         ENDLOOP.
       ENDLOOP.
 

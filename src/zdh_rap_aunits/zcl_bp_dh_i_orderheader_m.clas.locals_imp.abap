@@ -1,4 +1,10 @@
 CLASS lhc_Order DEFINITION INHERITING FROM cl_abap_behavior_handler.
+
+  PUBLIC SECTION.
+    CLASS-DATA:
+        my_order_items_active TYPE TABLE FOR READ RESULT zdh_i_orderitem_m.
+
+
   PRIVATE SECTION.
 
     METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
@@ -11,6 +17,10 @@ CLASS lhc_Order DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys REQUEST requested_features FOR order RESULT result.
     METHODS copy FOR MODIFY
       IMPORTING keys FOR ACTION order~copy.
+    METHODS activate FOR MODIFY
+      IMPORTING keys FOR ACTION order~activate.
+    METHODS collectlatenumberingkeys FOR DETERMINE ON SAVE
+      IMPORTING keys FOR order~collectlatenumberingkeys.
 
 ENDCLASS.
 
@@ -173,6 +183,27 @@ CLASS lhc_Order IMPLEMENTATION.
 
   ENDMETHOD.
 
+  METHOD Activate.
+*
+*    " map ItemForEdit to ItemNo
+*    READ ENTITIES OF zdh_i_orderheader_m IN LOCAL MODE
+*        ENTITY Order
+*            BY \_OrderItem ALL FIELDS WITH CORRESPONDING #( keys ) RESULT DATA(order_items_active).
+*
+*    my_order_items_active = order_items_active.
+  ENDMETHOD.
+
+  METHOD CollectLateNumberingKeys.
+
+    " map ItemForEdit to ItemNo
+    READ ENTITIES OF zdh_i_orderheader_m IN LOCAL MODE
+        ENTITY Order
+            BY \_OrderItem ALL FIELDS WITH CORRESPONDING #( keys ) RESULT DATA(order_items_active).
+
+    my_order_items_active = order_items_active.
+
+  ENDMETHOD.
+
 ENDCLASS.
 
 CLASS lhc_orderitem DEFINITION INHERITING FROM cl_abap_behavior_handler.
@@ -302,14 +333,7 @@ CLASS lhc_orderitem IMPLEMENTATION.
                    orderId      = <order_temp>-OrderId )
         ASSIGNING FIELD-SYMBOL(<order_group>).
 
-      DATA(order_last_item_no) = REDUCE #( INIT item_no = 0
-                                           FOR <item> IN GROUP <order_group>
-                                           NEXT item_no = COND #( WHEN <item>-ItemNoForEdit > item_no THEN <item>-ItemNoForEdit ELSE item_no ) ).
-
-      LOOP AT GROUP <order_group> ASSIGNING FIELD-SYMBOL(<order_item>) WHERE ItemNoForEdit IS INITIAL.
-        " Item no
-        order_last_item_no += 10.
-        <order_item>-ItemNoForEdit = order_last_item_no.
+      LOOP AT GROUP <order_group> ASSIGNING FIELD-SYMBOL(<order_item>).
 
         " Item currency - form header currency
         <order_item>-Currency = VALUE #( orders[ KEY pid %pid = <order_item>-%pidparent OrderId = <order_item>-OrderId ]-Currency OPTIONAL ).
@@ -320,7 +344,7 @@ CLASS lhc_orderitem IMPLEMENTATION.
     " Update item_no_foe_edit field for each order
     MODIFY ENTITIES OF ZDH_I_OrderHeader_M IN LOCAL MODE
         ENTITY OrderItem
-            UPDATE FIELDS ( ItemNoForEdit Currency )
+            UPDATE FIELDS ( Currency )
             WITH CORRESPONDING #( order_items ).
   ENDMETHOD.
 
@@ -330,6 +354,9 @@ CLASS lhc_orderitem IMPLEMENTATION.
 
     LOOP AT result ASSIGNING FIELD-SYMBOL(<feature_result>).
       <feature_result>-%field-Currency = if_abap_behv=>fc-f-read_only.
+
+      " In edit scenario, ItemForEdit is readonly
+      <feature_result>-%field-ItemNoForEdit = if_abap_behv=>fc-f-read_only.
     ENDLOOP.
   ENDMETHOD.
 
@@ -352,9 +379,7 @@ CLASS lsc_zdh_i_orderheader_m IMPLEMENTATION.
         INTO @DATA(latest_order_id).
 
     " map ItemForEdit to ItemNo
-    READ ENTITIES OF zdh_i_orderheader_m IN LOCAL MODE
-        ENTITY OrderItem
-            ALL FIELDS WITH CORRESPONDING #( mapped-orderitem ) RESULT DATA(order_item_active).
+    DATA(order_items_active) = lhc_Order=>my_order_items_active.
 
     LOOP AT mapped-order ASSIGNING FIELD-SYMBOL(<order>).
       latest_order_id += 1.
@@ -366,16 +391,20 @@ CLASS lsc_zdh_i_orderheader_m IMPLEMENTATION.
         <order_item>-OrderId = <order>-OrderId.
 
         " Map ItemNo from %TMP to final ItemNo
-        <order_item>-ItemNo  = <order_item>-%tmp-ItemNo.
+        <order_item>-ItemNo  = VALUE #( order_items_active[ %pid = <order_item>-%pid ]-ItemNoForEdit OPTIONAL ).
       ENDLOOP.
-
     ENDLOOP.
 
-*    " Case where a new item is added to an existing order
-*    LOOP AT mapped-orderitem ASSIGNING <order_item> WHERE orderId IS NOT INITIAL AND ItemNo IS INITIAL.
-*      " Map itemNoForEdit to ItemNo
-*      <order_item>-ItemNo  = VALUE #( order_item_active[ %pid = <order_item>-%pid ]-ItemNoForEdit OPTIONAL ).
-*    ENDLOOP.
+
+    " Adding item to existing order
+    LOOP AT mapped-orderitem ASSIGNING <order_item>
+       WHERE OrderId IS INITIAL AND ItemNo IS INITIAL.
+
+      <order_item>-OrderId = COND #( WHEN <order_item>-%tmp-OrderId IS NOT INITIAL THEN <order_item>-%tmp-OrderId ELSE '' ).
+
+      " Map ItemNo from %TMP to final ItemNo
+      <order_item>-ItemNo  = VALUE #( order_items_active[ %pid = <order_item>-%pid ]-ItemNoForEdit OPTIONAL ).
+    ENDLOOP.
 
   ENDMETHOD.
 

@@ -25,13 +25,15 @@ late numbering
   draft action Edit;
   draft action Discard;
   draft action Resume;
-  draft action Activate optimized;
+  draft action Activate optimized with additional implementation;
   draft determine action Prepare;
 
   factory action Copy [1];
 
   determination SetHeaderDefaultValues on modify { create; }
   determination SetItemCurrency on modify { field Currency; }
+
+  determination CollectLateNumberingKeys on save { create; update; }
 
   side effects
   {
@@ -67,14 +69,13 @@ late numbering
   update;
   delete;
 
-  field ( readonly ) OrderId, Status, IsOutline, ParentItemNo, ItemNoForEdit;
-  field ( readonly : update ) ItemNo;
-
+  field ( readonly ) OrderId, ItemNo;
+  field ( readonly ) Status, IsOutline, ParentItemNo;
 
   // Admin fields
   field ( readonly ) LocalCreatedByUser, LocalCreatedAt, LocalLastChangedByUser, LocalLastChangedAt, LastChangedAt;
 
-  field ( features : instance ) Currency;
+  field ( features : instance ) Currency, ItemNoForEdit;
 
   determination SetItemDefaultValues on modify { create; }
   determination CalculateOrderTotal on modify { field Quantity, NetPrice; }

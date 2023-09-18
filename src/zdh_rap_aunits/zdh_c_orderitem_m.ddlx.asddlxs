@@ -1,7 +1,7 @@
 @Metadata.layer: #CORE
 @UI.headerInfo: {
     title: {
-        value: 'ItemNo'
+        value: 'ItemNoForEdit'
     },
     description: {
         value: 'Description'
@@ -20,7 +20,7 @@ annotate view ZDH_C_OrderItem_M with
 //  
   @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 10  }]
   @UI.lineItem: [{ position: 10  }]
-  ItemNo;
+  ItemNoForEdit;
   
   @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 20, label: 'Parent Item'  }]
   @UI.lineItem: [{  position: 20, label: 'Parent Item'  }]
