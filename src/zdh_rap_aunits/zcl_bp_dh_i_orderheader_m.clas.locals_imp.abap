@@ -395,7 +395,6 @@ CLASS lsc_zdh_i_orderheader_m IMPLEMENTATION.
       ENDLOOP.
     ENDLOOP.
 
-
     " Adding item to existing order
     LOOP AT mapped-orderitem ASSIGNING <order_item>
        WHERE OrderId IS INITIAL AND ItemNo IS INITIAL.
