@@ -78,11 +78,13 @@ late numbering
 
   determination SetItemDefaultValues on modify { create; }
   determination CalculateOrderTotal on modify { field Quantity, NetPrice; }
+  determination CalculateOrderTotalOnDelete on modify { delete; }
 
   side effects
   {
     field Quantity affects entity _Order;
     field NetPrice affects entity _Order;
+    $self affects entity _Order;
   }
 
   mapping for zdh_t_order_item corresponding

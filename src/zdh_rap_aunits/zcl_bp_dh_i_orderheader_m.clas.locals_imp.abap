@@ -132,7 +132,7 @@ CLASS lhc_Order IMPLEMENTATION.
       <order_create>-%is_draft  = c_is_draft.
 
       " Change description to add "Copy of <Order Number>" as prefix
-      <order_create>-Description = |Copy of { <orig_order>-OrderId ALPHA = OUT }: { <orig_order>-Description }|.
+      <order_create>-Description = |Copy of { <orig_order>-Description }|.
 
       CLEAR: <order_create>-OrderId, <order_create>-%control-OrderId.
 
@@ -181,8 +181,8 @@ CLASS lhc_orderitem DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS CalculateOrderTotal FOR DETERMINE ON MODIFY
       IMPORTING keys FOR OrderItem~CalculateOrderTotal.
-
-
+    METHODS calculateordertotalondelete FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR orderitem~calculateordertotalondelete.
     METHODS SetItemDefaultValues FOR DETERMINE ON MODIFY
       IMPORTING keys FOR OrderItem~SetItemDefaultValues.
     METHODS get_instance_features FOR INSTANCE FEATURES
@@ -204,6 +204,60 @@ CLASS lhc_orderitem IMPLEMENTATION.
         ENTITY Order
             BY \_OrderItem ALL FIELDS WITH CORRESPONDING #( orders ) RESULT DATA(order_items).
 
+
+    " Calculate next item number for each order based on the last item number for that specific order
+    LOOP AT order_items ASSIGNING FIELD-SYMBOL(<order_temp>)
+        GROUP BY ( %pidparent   = <order_temp>-%pidparent
+                   orderId      = <order_temp>-OrderId )
+        ASSIGNING FIELD-SYMBOL(<order_group>).
+
+      DATA(total_of_items) = REDUCE #( INIT item_total = 0
+                                       FOR <item> IN GROUP <order_group>
+                                       NEXT item_total = item_total + ( <item>-Quantity * <item>-NetPrice ) ).
+
+      ASSIGN Orders[ KEY pid %pid = <order_group>-%pidparent OrderId = <order_group>-orderid ] TO FIELD-SYMBOL(<order>).
+      IF <order> IS ASSIGNED.
+        <order>-TotalAmount = total_of_items.
+        UNASSIGN <order>.
+      ENDIF.
+    ENDLOOP.
+
+
+    " Update Order Total
+    MODIFY ENTITIES OF ZDH_I_OrderHeader_M IN LOCAL MODE
+        ENTITY Order
+            UPDATE FIELDS ( TotalAmount )
+            WITH CORRESPONDING #( Orders ).
+  ENDMETHOD.
+
+  METHOD CalculateOrderTotalOnDelete.
+
+
+    " Get deleted items drafts - READ ENTITIES with the keys will not return any result in this case!
+    SELECT
+        FROM zdh_t_orderitmmd
+        FIELDS draftuuid, parentdraftuuid, orderid, itemno
+        FOR ALL ENTRIES IN @keys
+        WHERE draftuuid = @keys-%pid
+          AND orderid   = @keys-OrderId
+          AND itemno    = @keys-ItemNo
+        INTO TABLE @DATA(deleted_item_drafts).
+
+
+    " Read all undeleted items of these Orders now!
+    READ ENTITIES OF zdh_i_orderheader_m IN LOCAL MODE
+      ENTITY Order
+          ALL FIELDS WITH VALUE #( FOR <deleted_item> IN deleted_item_drafts
+                                   ( %is_draft = if_abap_behv=>mk-on
+                                     %pid      = <deleted_item>-parentdraftuuid
+                                     OrderId   = <deleted_item>-orderid ) )
+          RESULT DATA(orders)
+
+          BY \_OrderItem ALL FIELDS WITH VALUE #( FOR <deleted_item> IN deleted_item_drafts
+                                                  ( %is_draft = if_abap_behv=>mk-on
+                                                    %pid      = <deleted_item>-parentdraftuuid
+                                                    OrderId   = <deleted_item>-orderid ) )
+          RESULT DATA(order_items).
 
     " Calculate next item number for each order based on the last item number for that specific order
     LOOP AT order_items ASSIGNING FIELD-SYMBOL(<order_temp>)
