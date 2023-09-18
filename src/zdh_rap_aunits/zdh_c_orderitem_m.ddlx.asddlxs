@@ -1,0 +1,67 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    title: {
+        value: 'ItemNo'
+    },
+    description: {
+        value: 'Description'
+    }
+}
+annotate view ZDH_C_OrderItem_M with
+{
+  @UI.facet: [
+     { id: 'GeneralFacet', label: 'General', type: #COLLECTION, position: 10 },
+         { id: 'BasicDataFGR', label: 'Basic Data', type: #FIELDGROUP_REFERENCE, parentId: 'GeneralFacet', targetQualifier: 'BasicFG' },
+         { id: 'AdminDataFGR', label: 'Admin',      type: #FIELDGROUP_REFERENCE, parentId: 'GeneralFacet', targetQualifier: 'AdminFG' }
+  ]
+
+//  OrderId;
+//  ItemNo;
+//  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 10  }]
+  @UI.lineItem: [{ position: 10  }]
+  ItemNo;
+  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 20, label: 'Parent Item'  }]
+  @UI.lineItem: [{  position: 20, label: 'Parent Item'  }]
+  ParentItemNo;
+  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 30, label: 'Item Set'  }]
+  @UI.lineItem: [{ position: 30, label: 'Item Set'  }]
+  IsOutline;
+  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 40, label: 'Short Text'   }]
+  @UI.lineItem: [{  position: 40,  label: 'Short Text'   }]
+  Description;
+  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 50, label: 'Quantity'  }]
+  @UI.lineItem: [{ position: 50, label: 'Quantity'   }]
+  Quantity;
+  
+  @UI.hidden: true
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_UnitOfMeasure', element: 'UnitOfMeasure' } }]
+  OrderUnit;
+  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 60  }]
+  @UI.lineItem:   [{ position: 60  }]
+  NetPrice;
+  
+  @UI.hidden: true
+  Currency;
+  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 70, label: 'Status'   }]
+  @UI.lineItem: [{ position: 70,  label: 'Status'  }]
+  Status;
+  
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
+  LocalCreatedByUser;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
+  LocalCreatedAt;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
+  LocalLastChangedByUser;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
+  LocalLastChangedAt;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
+  LastChangedAt;
+
+}

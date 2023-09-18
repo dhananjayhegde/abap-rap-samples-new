@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition Order Managed BDEF'
+define service ZDH_SD_Order_M {
+  expose ZDH_C_OrderHeader_M as OrderHeader;
+  expose ZDH_C_OrderItem_M   as OrderItem;
+}

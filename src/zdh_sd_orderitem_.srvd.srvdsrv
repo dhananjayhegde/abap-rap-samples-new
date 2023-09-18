@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for Order Item'
+define service ZDH_SD_OrderItem_ {
+  expose ZDH_C_OrderItemTP as OrderItem;
+}

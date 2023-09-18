@@ -1,0 +1,61 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    title: {
+        value: 'OrderId'
+    },
+    description: {
+        value: 'Description'
+    }
+}
+annotate view ZDH_C_OrderHeader_M with
+{
+
+  @UI.facet: [
+      { id: 'GeneralFacet', label: 'General', type: #COLLECTION, position: 10 },
+          { id: 'BasicDataFGR', label: 'Basic Data', type: #FIELDGROUP_REFERENCE, parentId: 'GeneralFacet', targetQualifier: 'BasicFG' },
+          { id: 'AdminDataFGR', label: 'Admin',      type: #FIELDGROUP_REFERENCE, parentId: 'GeneralFacet', targetQualifier: 'AdminFG' },
+
+      { id: 'ItemsFacet', label: 'Items',  type: #LINEITEM_REFERENCE, targetElement: '_OrderItem', position: 20 }
+  ]
+
+
+  @UI.lineItem: [
+    { position: 5  },
+    { type: #FOR_ACTION, dataAction: 'Copy', isCopyAction: true, label: 'Copy', position: 10  }
+  ]
+  
+  @UI.identification: [
+    { type: #FOR_ACTION, dataAction: 'Copy', isCopyAction: true, label: 'Copy', position: 10  }
+  ]
+  OrderId;
+
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 10, label: 'Description'   }]
+  @UI.lineItem: [{ position: 10, label: 'Description'   }]
+  Description;
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 20, label: 'Order Total'    }]
+  @UI.lineItem: [{ position: 20, label: 'Order Total'   }]
+  TotalAmount;
+  
+  @UI.hidden: true
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Currency', element: 'Currency' } }]
+  Currency;
+  
+  @UI.fieldGroup: [{ qualifier: 'BasicFG', position: 40, label: 'Status'   }]
+  @UI.lineItem: [{ position: 40, label: 'Status'   }]
+  Status;
+
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 10   }]
+  @UI.lineItem: [{ position: 50  }]
+  LocalCreatedByUser;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 20   }]
+  @UI.lineItem: [{ position: 60  }]
+  LocalCreatedAt;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 30   }]
+  LocalLastChangedByUser;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 40   }]
+  LocalLastChangedAt;
+  @UI.fieldGroup: [{ qualifier: 'AdminFG', position: 50   }]
+  @UI.lineItem: [{ position: 70  }]
+  LastChangedAt;
+
+}
