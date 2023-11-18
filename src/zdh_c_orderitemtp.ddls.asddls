@@ -8,13 +8,30 @@ define root view entity ZDH_C_OrderItemTP
 {
   key OrderId,
   key ItemNo,
+      
+      @UI.lineItem: [{ position: 10, label: 'Hier. Item No' }]
+      FormattedItemNo,
       ParentItemNo,
+      
+      @UI.lineItem: [{ position: 20, label : 'Description' }]
       Description,
+      
+      @UI.lineItem: [{ position: 30, label : 'Quantity'  }]
       Quantity,
+      
+      @UI.hidden: true
       OrderUnit,
+      
+      @UI.lineItem: [{ position: 40, label : 'Net Price'  }]
       NetPrice,
+      
+      @UI.hidden: true
       Currency,
+      
+      @UI.lineItem: [{ position: 50, label : 'Status'  }]
       Status,
+      
+      
       /* Associations */
-      _Parent
+      _Parent: redirected to ZDH_C_OrderItemTP
 }

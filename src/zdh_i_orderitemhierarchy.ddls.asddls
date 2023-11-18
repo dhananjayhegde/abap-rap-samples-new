@@ -13,13 +13,13 @@ define hierarchy ZDH_I_OrderItemHierarchy
 {
   key OrderId,
   key ItemNo,
-      ParentItemNo,
-      Description,
-      Quantity,
-      OrderUnit,
-      NetPrice,
-      Currency,
-      Status,
+      ParentItemNo
+//      Description,
+//      Quantity,
+//      OrderUnit,
+//      NetPrice,
+//      Currency,
+//      Status
       /* Associations */
-      _Parent
+//      _Parent
 }
