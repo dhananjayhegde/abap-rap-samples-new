@@ -1,0 +1,16 @@
+projection;
+strict ( 2 );
+
+define behavior for ZDH_C_OrderHeaderTP alias OrderHeader
+{
+
+  use association _Item;
+}
+
+define behavior for ZDH_C_OrderItemTP_2 alias OrderItem
+{
+
+  use action SetToComplete;
+
+  use association _Header;
+}

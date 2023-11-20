@@ -16,6 +16,12 @@ define root view entity ZDH_R_OrderItemTP
       NetPrice,
       Currency,
       Status,
+      
+      @Semantics.user.lastChangedBy: true
+      LocalLastChangedByUser,
+      
+      @Semantics.systemDateTime.lastChangedAt: true
+      LastChangedAt,
 
       /* Associations */
       _Parent

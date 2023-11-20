@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definition for Order with Manage BDEF'
+define service ZDH_SD_ORDERITEM_HIER_ACT {
+  expose ZDH_C_OrderItemTP_2 as OrderItem;
+}

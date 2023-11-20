@@ -25,5 +25,8 @@ define view entity ZDH_I_OrderItemNode
       Currency,
       Status,
       
+      LocalLastChangedByUser,
+      LastChangedAt,
+      
       _Parent
 }
