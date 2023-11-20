@@ -8,5 +8,6 @@ So, I decided to create a new package and use that for all future `Sample` devel
 | Package        | Usage                                                                                                                                                        |
 |----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | ZDH_RAP_AUNITS | As the name would suggest, started as a project to demonstrate ABAP Units for RAP Business Objects.  But, later becamse `RAP Managed BO with Late Numbering` |
-|                |                                                                                                                                                              |
+| ZDH_V4_HIER_RO | (OData V4) Read-only CDS Hierarchy based Fiori Elements appliction with hierarchy being shown on the List Report page instead of object page                 |
+| ZDH_V4_HIER_ACT | (OData V4 + RAP) CDS Hierarchy based Fiori Elements appliction with hierarchy being shown on the List Report page + actions                                 |
 
