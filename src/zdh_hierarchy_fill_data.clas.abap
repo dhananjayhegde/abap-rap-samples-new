@@ -19,12 +19,13 @@ CLASS zdh_hierarchy_fill_data IMPLEMENTATION.
     delete_all( ).
 
     DATA:
-        lt_orderitem TYPE TABLE OF zdh_t_order_item.
+      lt_order     TYPE TABLE OF zdh_t_order,
+      lt_orderitem TYPE TABLE OF zdh_t_order_item.
 
-    SELECT * FROM zdh_t_order_item INTO TABLE @lt_orderitem.
-    IF sy-subrc = 0.
-      DELETE zdh_t_order_item FROM TABLE @lt_orderitem.
-    ENDIF.
+    lt_order = VALUE #(
+        ( order_id = '0000001234' currency = 'INR' total_amount = 20000 description = 'Test Order 1' status = 'Sent' )
+        ( order_id = '0000002345' currency = 'INR' total_amount = 50000 description = 'Test Order 2' status = 'Fulfilled' )
+    ).
 
     lt_orderitem = VALUE #(
         ( order_id = '0000001234' item_no = '00010' description = 'Accessories' isoutline = abap_true )
@@ -51,24 +52,26 @@ CLASS zdh_hierarchy_fill_data IMPLEMENTATION.
             ( order_id = '0000002345' item_no = '00090' description = 'Keyboard'  parent_item_no = '00030'    net_price = 1500    currency = 'INR' )
     ).
 
-    MODIFY zdh_t_order_item FROM TABLE @lt_orderitem.
+    MODIFY zdh_t_order      FROM TABLE @lt_order.
+    out->write( |Order Header: { sy-dbcnt } rows modified| ).
 
-    out->write( |{ sy-dbcnt } rows modified| ).
+    MODIFY zdh_t_order_item FROM TABLE @lt_orderitem.
+    out->write( |Order Item: { sy-dbcnt } rows modified| ).
   ENDMETHOD.
 
   METHOD delete_all.
-*    DATA:
-*          lt_orderitem TYPE TABLE OF zdh_t_order_item.
-*
-*    SELECT * FROM zdh_t_order INTO TABLE @DATA(orders).
-*    IF sy-subrc = 0.
-*      DELETE zdh_t_order FROM TABLE @orders.
-*    ENDIF.
-*
-*    SELECT * FROM zdh_t_order_item INTO TABLE @DATA(order_items).
-*    IF sy-subrc = 0.
-*      DELETE zdh_t_order_item FROM TABLE @order_items.
-*    ENDIF.
+    DATA:
+          lt_orderitem TYPE TABLE OF zdh_t_order_item.
+
+    SELECT * FROM zdh_t_order INTO TABLE @DATA(orders).
+    IF sy-subrc = 0.
+      DELETE zdh_t_order FROM TABLE @orders.
+    ENDIF.
+
+    SELECT * FROM zdh_t_order_item INTO TABLE @DATA(order_items).
+    IF sy-subrc = 0.
+      DELETE zdh_t_order_item FROM TABLE @order_items.
+    ENDIF.
 
   ENDMETHOD.
 

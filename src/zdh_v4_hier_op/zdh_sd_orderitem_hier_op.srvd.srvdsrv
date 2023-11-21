@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definition for Order with Hier on OP'
+define service ZDH_SD_ORDERITEM_HIER_OP {
+  expose ZDH_C_OrderHeaderDirTP as OrderHeader;
+  expose ZDH_C_OrderItemDirTP   as OrderItem;
+}

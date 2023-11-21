@@ -1,0 +1,19 @@
+projection;
+strict ( 2 );
+
+define behavior for ZDH_C_OrderHeaderDirTP alias OrderHeader
+{
+  use create;
+  use update;
+  use delete;
+
+  use association _Item;
+}
+
+define behavior for ZDH_C_OrderItemDirTP alias OrderItem
+{
+
+  use action SetToComplete;
+
+  use association _Header;
+}
