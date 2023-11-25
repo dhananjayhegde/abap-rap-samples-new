@@ -3,6 +3,7 @@
 {
 "FROM":
 [
+"ZDH_C_STATUSVH",
 "ZDH_R_ORDERITEMTP_2"
 ],
 "ASSOCIATED":

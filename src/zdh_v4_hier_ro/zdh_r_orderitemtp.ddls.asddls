@@ -14,12 +14,15 @@ define root view entity ZDH_R_OrderItemTP
       Quantity,
       OrderUnit,
       NetPrice,
+      cast( case when NetPrice > 1000 then 'X'
+                 else ''
+            end as abap_boolean preserving type )                          as ItemIsExpensive,
       Currency,
       Status,
-      
+
       @Semantics.user.lastChangedBy: true
       LocalLastChangedByUser,
-      
+
       @Semantics.systemDateTime.lastChangedAt: true
       LastChangedAt,
 
