@@ -1,0 +1,27 @@
+@Metadata.layer: #CORE
+@UI.headerInfo: {
+    title: {
+        value: 'SeqNum'
+    },
+    description: {
+        value: 'Filename'
+    }
+}
+annotate view ZDH_C_OrderItemAttachment_M with
+{
+
+
+  @UI.lineItem: [{ position: 10, label: 'Seqn. No.'  }]
+  SeqNum;
+
+  
+  @UI.lineItem: [{ position: 30,  label: 'Attachment' }]
+  Attachment;
+
+  @UI.lineItem: [{ position: 40,  label: 'Mime Type' }]
+  Mimetype;
+
+  @UI.lineItem: [{ position: 50,  label: 'File Name' }]
+  Filename;
+
+}

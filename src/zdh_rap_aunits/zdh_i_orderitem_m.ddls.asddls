@@ -10,14 +10,18 @@
 define view entity ZDH_I_OrderItem_M
   as select from ZDH_I_OrderItemBasic
 
-  association to parent ZDH_I_OrderHeader_M as _Order on $projection.OrderId = _Order.OrderId
+  composition [0..*] of ZDH_I_OrderItemAttachment_M as _ItemAttachment
+
+  association to parent ZDH_I_OrderHeader_M         as _Order on $projection.OrderId = _Order.OrderId
+
+
 {
   key OrderId,
   key ItemNo,
 
       ItemNo as ItemNoForEdit,
       ParentItemNo,
-      
+
       IsOutline,
       Description,
       @Semantics.quantity.unitOfMeasure: 'OrderUnit'
@@ -28,7 +32,7 @@ define view entity ZDH_I_OrderItem_M
       NetPrice,
       Currency,
       Status,
-      
+
       @Semantics.largeObject:{
         mimeType: 'MimeType',
         fileName: 'FileName',
@@ -50,5 +54,6 @@ define view entity ZDH_I_OrderItem_M
       @Semantics.systemDateTime.lastChangedAt: true
       LastChangedAt,
 
-      _Order
+      _Order,
+      _ItemAttachment
 }

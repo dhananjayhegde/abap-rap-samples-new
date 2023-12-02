@@ -394,6 +394,11 @@ CLASS lsc_zdh_i_orderheader_m IMPLEMENTATION.
       <order_item>-ItemNo  = VALUE #( order_items_active[ %pid = <order_item>-%pid ]-ItemNoForEdit OPTIONAL ).
     ENDLOOP.
 
+    " Attachment - Map from %tmp to final number
+    LOOP AT mapped-itemattachment ASSIGNING FIELD-SYMBOL(<item_attach>).
+      <item_attach>-%key = CORRESPONDING #( <item_attach>-%tmp ).
+    ENDLOOP.
+
   ENDMETHOD.
 
 ENDCLASS.

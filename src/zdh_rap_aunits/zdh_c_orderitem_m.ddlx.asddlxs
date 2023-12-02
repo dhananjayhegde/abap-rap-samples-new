@@ -13,7 +13,9 @@ annotate view ZDH_C_OrderItem_M with
   @UI.facet: [
      { id: 'GeneralFacet', label: 'General', type: #COLLECTION, position: 10 },
          { id: 'BasicDataFGR', label: 'Basic Data', type: #FIELDGROUP_REFERENCE, parentId: 'GeneralFacet', targetQualifier: 'BasicFG' },
-         { id: 'AdminDataFGR', label: 'Admin',      type: #FIELDGROUP_REFERENCE, parentId: 'GeneralFacet', targetQualifier: 'AdminFG' }
+         { id: 'AdminDataFGR', label: 'Admin',      type: #FIELDGROUP_REFERENCE, parentId: 'GeneralFacet', targetQualifier: 'AdminFG' },
+  
+     { id: 'AttachmentFacet', label: 'Attachments', type: #LINEITEM_REFERENCE, position: 20, targetElement: '_ItemAttachment' }
   ]
 
 //  OrderId;

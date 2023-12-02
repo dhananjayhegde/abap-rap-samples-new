@@ -29,5 +29,6 @@ define view entity ZDH_C_OrderItem_M
       LastChangedAt,
 
       /* Associations */
-      _Order : redirected to parent ZDH_C_OrderHeader_M
+      _Order          : redirected to parent ZDH_C_OrderHeader_M,
+      _ItemAttachment : redirected to composition child ZDH_C_OrderItemAttachment_M
 }

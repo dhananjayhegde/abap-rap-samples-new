@@ -108,4 +108,32 @@ late numbering
     }
 
   association _Order { with draft; }
+  association _ItemAttachment { create; with draft; }
+}
+
+
+define behavior for ZDH_I_OrderItemAttachment_M alias ItemAttachment
+persistent table zdh_t_item_attch
+draft table zdh_t_itemattchd
+lock dependent by _Order
+authorization dependent by _Order
+late numbering
+//etag master <field_name>
+{
+  update;
+  delete;
+
+  field ( readonly ) OrderId, ItemNo; // SeqNum;
+  field ( readonly : update ) SeqNum;
+
+  association _Order { with draft; }
+  association _OrderItem { with draft;}
+
+  mapping for zdh_t_item_attch corresponding
+    {
+      OrderId = order_id;
+      ItemNo  = item_no;
+      SeqNum  = seq_num;
+    }
+
 }

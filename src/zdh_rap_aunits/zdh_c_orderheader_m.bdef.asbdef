@@ -17,7 +17,7 @@ define behavior for ZDH_C_OrderHeader_M alias Order
 
   use action Copy;
 
-  use association _OrderItem { create (augment); with draft; }
+  use association _OrderItem { create ( augment ); with draft; }
 }
 
 define behavior for ZDH_C_OrderItem_M alias OrderItem
@@ -26,4 +26,14 @@ define behavior for ZDH_C_OrderItem_M alias OrderItem
   use delete;
 
   use association _Order { with draft; }
+  use association _ItemAttachment { create ( augment ); with draft; }
+}
+
+define behavior for ZDH_C_OrderItemAttachment_M alias ItemAttachment
+{
+  use update;
+  use delete;
+
+  use association _Order { with draft; }
+  use association _OrderItem { with draft; }
 }
