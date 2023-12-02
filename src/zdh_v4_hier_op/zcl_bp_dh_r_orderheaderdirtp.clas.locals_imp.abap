@@ -22,6 +22,12 @@ CLASS lhc_OrderItem DEFINITION INHERITING FROM cl_abap_behavior_handler.
     METHODS SetToComplete FOR MODIFY
       IMPORTING keys FOR ACTION OrderItem~SetToComplete.
 
+    METHODS setDescription FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR OrderItem~setDescription.
+
+    METHODS checkQuantityExceedsLimit FOR VALIDATE ON SAVE
+      IMPORTING keys FOR OrderItem~checkQuantityExceedsLimit.
+
 ENDCLASS.
 
 CLASS lhc_OrderItem IMPLEMENTATION.
@@ -30,6 +36,13 @@ CLASS lhc_OrderItem IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD SetToComplete.
+  ENDMETHOD.
+
+  METHOD setDescription.
+
+  ENDMETHOD.
+
+  METHOD checkQuantityExceedsLimit.
   ENDMETHOD.
 
 ENDCLASS.

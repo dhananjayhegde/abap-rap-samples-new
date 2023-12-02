@@ -1,0 +1,65 @@
+managed implementation in class zcl_dh_bp_r_orderheadermngdtp unique;
+strict ( 2 );
+
+define behavior for ZDH_R_OrderHeaderMngdTP alias Order
+persistent table zdh_t_order
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( readonly : update ) OrderId;
+
+  association _Item { create; }
+
+  mapping for zdh_t_order corresponding
+    {
+      OrderId                = order_id;
+      Description            = description;
+      TotalAmount            = total_amount;
+      Currency               = currency;
+      Status                 = status;
+      LocalCreatedByUser     = local_created_by;
+      LocalCreatedAt         = local_created_at;
+      LocalLastChangedByUser = local_last_changed_by;
+      LocalLastChangedAt     = local_last_changed_at;
+      LastChangedAt          = last_changed_at;
+    }
+}
+
+define behavior for ZDH_R_OrderItemMngdTP alias Item
+persistent table zdh_t_order_item
+lock dependent by _Header
+authorization dependent by _Header
+etag master LastChangedAt
+{
+  update;
+  delete;
+
+  field ( readonly ) OrderId;
+  field ( readonly : update ) ItemNo;
+
+  association _Header;
+
+  determination setDescription on modify { create; }
+
+  validation checkQuantity on save { create; update; }
+
+  mapping for zdh_t_order_item corresponding
+    {
+      OrderId                = order_id;
+      ItemNo                 = item_no;
+      ParentItemNo           = parent_item_no;
+      Description            = description;
+      Quantity               = quantity;
+      OrderUnit              = order_unit;
+      NetPrice               = net_price;
+      Currency               = currency;
+      Status                 = status;
+      LocalLastChangedByUser = local_last_changed_by;
+      LastChangedAt          = last_changed_at;
+    }
+}
