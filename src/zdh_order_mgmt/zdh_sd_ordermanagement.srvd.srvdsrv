@@ -1,0 +1,4 @@
+@EndUserText.label: 'DH Order Management Service'
+define service ZDH_SD_OrderManagement {
+  expose ZDH_OM_C_OrderItem as OrderItem;
+}

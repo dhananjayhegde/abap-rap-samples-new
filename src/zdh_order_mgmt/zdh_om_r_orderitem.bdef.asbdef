@@ -1,0 +1,15 @@
+managed with unmanaged save implementation in class zcl_dh_om_r_orderitem unique;
+strict ( 2 );
+
+define behavior for ZDH_OM_R_OrderItem alias OrderItems
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+
+  field ( readonly ) OrderId, ItemNo;
+
+  action ( precheck ) CancelOrder parameter ZDH_OM_D_CancelOrderP;
+  action ( precheck ) KeepOrder parameter ZDH_OM_D_KeepOrderP;
+  action ( precheck ) RescheduleDelivery parameter ZDH_OM_D_RescheduleDeliveryP;
+}

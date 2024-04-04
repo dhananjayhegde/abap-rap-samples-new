@@ -1,39 +1,4 @@
-projection implementation in class zcl_bp_dh_c_orderheader_m unique;
-strict ( 2 );
-use draft;
-use side effects;
-
-define behavior for ZDH_C_OrderHeader_M alias Order
+unmanaged;
+define behavior for ZDH_C_ORDERHEADER_M
 {
-  use create;
-  use update;
-  use delete;
-
-  use action Edit;
-  use action Discard;
-  use action Resume;
-  use action Activate;
-  use action Prepare;
-
-  use action Copy;
-
-  use association _OrderItem { create ( augment ); with draft; }
-}
-
-define behavior for ZDH_C_OrderItem_M alias OrderItem
-{
-  use update;
-  use delete;
-
-  use association _Order { with draft; }
-  use association _ItemAttachment { create ( augment ); with draft; }
-}
-
-define behavior for ZDH_C_OrderItemAttachment_M alias ItemAttachment
-{
-  use update;
-  use delete;
-
-  use association _Order { with draft; }
-  use association _OrderItem { with draft; }
 }

@@ -1,5 +1,13 @@
-CLASS zcl_bp_dh_r_orderheaderdirtp DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zdh_r_orderheaderdirtp.
+class ZCL_BP_DH_R_ORDERHEADERDIRTP definition
+  public
+  create private .
+
+public section.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zcl_bp_dh_r_orderheaderdirtp IMPLEMENTATION.
+
+
+CLASS ZCL_BP_DH_R_ORDERHEADERDIRTP IMPLEMENTATION.
 ENDCLASS.

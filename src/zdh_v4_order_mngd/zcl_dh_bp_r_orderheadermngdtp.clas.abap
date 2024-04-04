@@ -1,5 +1,13 @@
-CLASS zcl_dh_bp_r_orderheadermngdtp DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zdh_r_orderheadermngdtp.
+class ZCL_DH_BP_R_ORDERHEADERMNGDTP definition
+  public
+  create private .
+
+public section.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zcl_dh_bp_r_orderheadermngdtp IMPLEMENTATION.
+
+
+CLASS ZCL_DH_BP_R_ORDERHEADERMNGDTP IMPLEMENTATION.
 ENDCLASS.

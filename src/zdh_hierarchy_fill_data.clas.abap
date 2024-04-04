@@ -27,13 +27,15 @@ CLASS zdh_hierarchy_fill_data IMPLEMENTATION.
         ( order_id = '0000002345' currency = 'INR' total_amount = 50000 description = 'Test Order 2' status = 'Fulfilled' )
     ).
 
-    lt_orderitem = VALUE #(
-        ( order_id = '0000001234' item_no = '00010' description = 'Accessories' isoutline = abap_true status = '02' )
+    data(lv_current_user) = sy-uname.
 
-        ( order_id = '0000001234' item_no = '00020' description = 'I/O Devices' isoutline = abap_true )
-            ( order_id = '0000001234' item_no = '00040' description = 'Headset'   parent_item_no = '00020'    net_price = 5000    currency = 'INR' status = '02' )
-            ( order_id = '0000001234' item_no = '00050' description = 'Mouse'     parent_item_no = '00020'    net_price = 800     currency = 'INR' status = '03' )
-            ( order_id = '0000001234' item_no = '00060' description = 'Keyboard'  parent_item_no = '00020'    net_price = 1500    currency = 'INR' status = '03' )
+    lt_orderitem = VALUE #(
+        ( order_id = '0000001234' item_no = '00010' description = 'Accessories' isoutline = abap_true status = '02' requestor = lv_current_user )
+
+        ( order_id = '0000001234' item_no = '00020' description = 'I/O Devices' isoutline = abap_true requestor = lv_current_user )
+            ( order_id = '0000001234' item_no = '00040' description = 'Headset'   parent_item_no = '00020'    net_price = 5000    currency = 'INR' status = '02' requestor = lv_current_user )
+            ( order_id = '0000001234' item_no = '00050' description = 'Mouse'     parent_item_no = '00020'    net_price = 800     currency = 'INR' status = '03' requestor = lv_current_user )
+            ( order_id = '0000001234' item_no = '00060' description = 'Keyboard'  parent_item_no = '00020'    net_price = 1500    currency = 'INR' status = '03' requestor = lv_current_user )
 
         ( order_id = '0000001234' item_no = '00030' description = 'Memory Devices' isoutline = abap_true )
             ( order_id = '0000001234' item_no = '00070' description = 'Hard disk' parent_item_no = '00030'    net_price = 3500    currency = 'INR' status = '04' )

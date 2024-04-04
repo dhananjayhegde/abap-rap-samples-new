@@ -21,6 +21,7 @@ define view entity ZDH_I_OrderItemBasic
       @Semantics.amount.currencyCode: 'Currency'
       net_price             as NetPrice,
       currency              as Currency,
+      delivery_data         as DeliveryDate,
       status                as Status,
 
       @Semantics.largeObject:{
@@ -31,6 +32,8 @@ define view entity ZDH_I_OrderItemBasic
       attachment            as Attachment,
       mimetype              as MimeType,
       filename              as FileName,
+
+      requestor             as Requestor,
 
       // Admin fields
       local_created_by      as LocalCreatedByUser,

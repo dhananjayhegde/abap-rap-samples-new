@@ -1,5 +1,13 @@
-CLASS zcl_bp_dh_c_orderheader_m DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zdh_c_orderheader_m.
+class ZCL_BP_DH_C_ORDERHEADER_M definition
+  public
+  create private .
+
+public section.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zcl_bp_dh_c_orderheader_m IMPLEMENTATION.
+
+
+CLASS ZCL_BP_DH_C_ORDERHEADER_M IMPLEMENTATION.
 ENDCLASS.

@@ -1,0 +1,5 @@
+CLASS zcl_dh_om_r_orderitem DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zdh_om_r_orderitem.
+ENDCLASS.
+
+CLASS zcl_dh_om_r_orderitem IMPLEMENTATION.
+ENDCLASS.
