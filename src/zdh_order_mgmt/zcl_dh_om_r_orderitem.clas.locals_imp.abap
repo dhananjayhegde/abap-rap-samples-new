@@ -21,6 +21,8 @@ CLASS lhc_OrderItems DEFINITION INHERITING FROM cl_abap_behavior_handler.
 
     METHODS precheck_RescheduleDelivery FOR PRECHECK
       IMPORTING keys FOR ACTION OrderItems~RescheduleDelivery.
+    METHODS ValidateAction FOR MODIFY
+      IMPORTING keys FOR ACTION OrderItems~ValidateAction.
 
 ENDCLASS.
 
@@ -30,9 +32,47 @@ CLASS lhc_OrderItems IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD CancelOrder.
+    IF lines( keys ) = 3.
+      " No errors in case of only 1 item selection
+      RETURN.
+    ELSEIF lines( keys ) = 2.
+      reported-orderitems = VALUE #( FOR <key> IN keys
+                                     ( %cid = <key>-%cid_ref
+                                       %tky = <key>-%tky
+                                       %msg = new_message_with_text( severity = if_abap_behv_message=>severity-warning
+                                                                     text     = `Sample warning from Cancel!` ) ) ).
+    ELSE.
+      reported-orderitems = VALUE #( FOR <key> IN keys
+                                     ( %cid = <key>-%cid_ref
+                                       %tky = <key>-%tky
+                                       %msg = new_message_with_text( severity = if_abap_behv_message=>severity-error
+                                                                     text     = `Sample error from Cancel!` ) ) ).
+      failed-orderitems = CORRESPONDING #( keys ).
+
+    ENDIF.
   ENDMETHOD.
 
   METHOD precheck_CancelOrder.
+    IF lines( keys ) = 3.
+      " No errors in case of only 1 item selection
+      RETURN.
+    ELSEIF lines( keys ) = 2.
+      reported-orderitems = VALUE #(
+          FOR <key> IN keys
+          ( %cid = <key>-%cid_ref
+            %tky = <key>-%tky
+            %msg = new_message_with_text( severity = if_abap_behv_message=>severity-warning
+                                          text     = `Sample warning from Precheck Cancel!` ) ) ).
+    ELSE.
+      reported-orderitems = VALUE #( FOR <key> IN keys
+                                     ( %cid = <key>-%cid_ref
+                                       %tky = <key>-%tky
+                                       %msg = new_message_with_text(
+                                                  severity = if_abap_behv_message=>severity-error
+                                                  text     = `Sample error from Precheck Cancel!` ) ) ).
+      failed-orderitems = CORRESPONDING #( keys ).
+
+    ENDIF.
   ENDMETHOD.
 
   METHOD KeepOrder.
@@ -45,6 +85,29 @@ CLASS lhc_OrderItems IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD precheck_RescheduleDelivery.
+  ENDMETHOD.
+
+  METHOD ValidateAction.
+    IF lines( keys ) = 3.
+      " No errors in case of only 1 item selection
+      RETURN.
+    ELSEIF lines( keys ) = 2.
+*      reported-orderitems = VALUE #(
+*          FOR <key> IN keys
+*          ( %cid = <key>-%cid_ref
+*            %tky = <key>-%tky
+*            %msg = new_message_with_text( severity = if_abap_behv_message=>severity-warning
+*                                          text     = `Sample warning from Validate Action!` ) ) ).
+    ELSE.
+      reported-orderitems = VALUE #( FOR <key> IN keys
+                                     ( %cid = <key>-%cid_ref
+                                       %tky = <key>-%tky
+                                       %msg = new_message_with_text(
+                                                  severity = if_abap_behv_message=>severity-error
+                                                  text     = `Sample error from Validate Action!` ) ) ).
+      failed-orderitems = CORRESPONDING #( keys ).
+
+    ENDIF.
   ENDMETHOD.
 
 ENDCLASS.

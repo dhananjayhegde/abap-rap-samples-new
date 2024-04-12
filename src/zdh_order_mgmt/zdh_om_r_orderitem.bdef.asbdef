@@ -9,6 +9,8 @@ etag master LastChangedAt
 
   field ( readonly ) OrderId, ItemNo;
 
+  action ValidateAction;
+
   action ( precheck ) CancelOrder parameter ZDH_OM_D_CancelOrderP;
   action ( precheck ) KeepOrder parameter ZDH_OM_D_KeepOrderP;
   action ( precheck ) RescheduleDelivery parameter ZDH_OM_D_RescheduleDeliveryP;

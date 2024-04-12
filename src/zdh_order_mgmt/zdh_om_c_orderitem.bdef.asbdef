@@ -4,6 +4,7 @@ strict ( 2 );
 define behavior for ZDH_OM_C_OrderItem alias OrderItem
 {
 
+  use action ValidateAction;
   use action CancelOrder;
   use action KeepOrder;
   use action RescheduleDelivery;
