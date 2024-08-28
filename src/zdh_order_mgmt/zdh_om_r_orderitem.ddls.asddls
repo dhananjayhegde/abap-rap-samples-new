@@ -1,5 +1,16 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Order Item'
+
+@AbapCatalog.extensibility: {
+  extensible: true,
+  elementSuffix: 'ZOI',
+  quota: {
+    maximumFields: 500,
+    maximumBytes: 5000
+  },
+  allowNewCompositions: true
+}
+
 define root view entity ZDH_OM_R_OrderItem
   as select from ZDH_I_OrderItemBasic
 {

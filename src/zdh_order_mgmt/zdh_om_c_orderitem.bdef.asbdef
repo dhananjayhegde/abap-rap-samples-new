@@ -1,7 +1,9 @@
 projection;
 strict ( 2 );
+extensible;
 
 define behavior for ZDH_OM_C_OrderItem alias OrderItem
+extensible
 {
 
   use action ValidateAction;

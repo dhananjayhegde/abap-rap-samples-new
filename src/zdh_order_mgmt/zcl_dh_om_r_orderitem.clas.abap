@@ -1,5 +1,13 @@
-CLASS zcl_dh_om_r_orderitem DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zdh_om_r_orderitem.
+class ZCL_DH_OM_R_ORDERITEM definition
+  public
+  create private .
+
+public section.
+protected section.
+private section.
 ENDCLASS.
 
-CLASS zcl_dh_om_r_orderitem IMPLEMENTATION.
+
+
+CLASS ZCL_DH_OM_R_ORDERITEM IMPLEMENTATION.
 ENDCLASS.

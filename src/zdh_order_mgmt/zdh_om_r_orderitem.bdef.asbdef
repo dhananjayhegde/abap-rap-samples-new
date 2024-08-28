@@ -1,10 +1,19 @@
 managed with unmanaged save implementation in class zcl_dh_om_r_orderitem unique;
 strict ( 2 );
+extensible
+{
+  with additional save;
+  with determinations on modify;
+  with determinations on save;
+  with validations on save;
+}
+
 
 define behavior for ZDH_OM_R_OrderItem alias OrderItems
 lock master
 authorization master ( instance )
 etag master LastChangedAt
+extensible
 {
 
   field ( readonly ) OrderId, ItemNo;
