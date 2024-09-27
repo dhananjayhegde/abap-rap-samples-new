@@ -2,8 +2,12 @@
 This is a live repo for all my explorations with RAP, OData v4, Fiori Elements and Hierarchies etc.  
 They are sometimes featured on my blog too (which is currently in migration)
 
-Original Blog: [Dhananjay Hegde's Presonal Blog](https://dhananjayhegde.in)
-New one under development: [Dhananjay Hegde's Presonal Blog migrated - temporary site](https://dhananjayhegde.netlify.app)
+- Original Blog: [Dhananjay Hegde's Presonal Blog](https://dhananjayhegde.in)
+- New one under development: [Dhananjay Hegde's Presonal Blog migrated - temporary site](https://dhananjayhegde.netlify.app)
+
+Some topics you might like:
+- [Series on ABAP RAP, CAP etc.](https://dhananjayhegde.netlify.app/series/)
+- [Series on ABAP RAP, CAP etc. on original site](https://dhananjayhegde.in/series/)
 
 # ABAP RAP Samples - compatiable with abapGit
 Earlier [ABAP Sample Repo](https://github.com/dhananjayhegde/ABAP-RAP-Samples) was not compatible with abapGit - i.e. code was manually copied to the repo instead of pushing them via abapGit. So, if someone wanted to reuse them, it would be very difficult to manually navigate through different files and figure out what to take over.
