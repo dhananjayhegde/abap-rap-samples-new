@@ -4,6 +4,8 @@
   <asx:values>
    <DEVC>
     <CTEXT>A Units for RAP Business Objects</CTEXT>
+    <LANGUAGE>E</LANGUAGE>
+    <MASTERLANG>E</MASTERLANG>
    </DEVC>
   </asx:values>
  </asx:abap>

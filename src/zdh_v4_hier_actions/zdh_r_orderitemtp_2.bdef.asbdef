@@ -1,0 +1,31 @@
+managed implementation in class zcl_bp_dh_r_orderitemtp_2 unique;
+strict ( 2 );
+
+define behavior for ZDH_R_OrderItemTP_2 alias OrderItem
+persistent table zdh_t_order_item
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+  //  update;
+  //  delete;
+
+  field ( readonly ) OrderId, ItemNo;
+
+  action SetToComplete;
+
+  mapping for zdh_t_order_item corresponding
+    {
+      OrderId                = order_id;
+      ItemNo                 = item_no;
+      ParentItemNo           = parent_item_no;
+      Description            = description;
+      Quantity               = quantity;
+      OrderUnit              = order_unit;
+      NetPrice               = net_price;
+      Currency               = currency;
+      Status                 = status;
+      LastChangedAt          = last_changed_at;
+      LocalLastChangedByUser = local_last_changed_by;
+    }
+}

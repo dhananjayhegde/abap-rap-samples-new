@@ -1,0 +1,8 @@
+projection;
+strict ( 2 );
+
+define behavior for ZDH_C_OrderItemTP_2 alias OrderItem
+{
+
+  use action SetToComplete;
+}

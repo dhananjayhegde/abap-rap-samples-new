@@ -6,16 +6,12 @@
     sizeCategory: #L,
     dataClass: #MIXED
 }
-define view entity ZDH_R_OrderItemTP_2
+define root view entity ZDH_R_OrderItemTP_2
   as select from ZDH_I_OrderItemNode
-
-  // Composition parent
-  association        to parent ZDH_R_OrderHeaderTP as _Header     on  _Header.OrderId = $projection.OrderId
 
   // Hierarchy parent item
   association        to ZDH_R_OrderItemTP_2        as _Parent     on  $projection.OrderId      = _Parent.OrderId
                                                                   and $projection.ParentItemNo = _Parent.ItemNo
-
   association [1..*] to ZDH_C_StatusVH             as _StatusText on  _StatusText.Status = $projection.Status
 
 {
@@ -38,7 +34,6 @@ define view entity ZDH_R_OrderItemTP_2
       LastChangedAt,
 
       /* Associations */
-      _Header,
       _Parent,
       _StatusText
 }

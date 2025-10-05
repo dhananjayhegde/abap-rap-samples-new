@@ -4,6 +4,8 @@
   <asx:values>
    <DEVC>
     <CTEXT>ODATA V4 Hierarchy with Actions on Object Page</CTEXT>
+    <LANGUAGE>E</LANGUAGE>
+    <MASTERLANG>E</MASTERLANG>
    </DEVC>
   </asx:values>
  </asx:abap>

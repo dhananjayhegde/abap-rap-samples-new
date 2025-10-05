@@ -4,6 +4,8 @@
   <asx:values>
    <DEVC>
     <CTEXT>RAP Extension Project for R_BANKTP Object</CTEXT>
+    <LANGUAGE>E</LANGUAGE>
+    <MASTERLANG>E</MASTERLANG>
    </DEVC>
   </asx:values>
  </asx:abap>
